@@ -6,6 +6,7 @@ class App extends React.Component {
     this.state = {
       videos: window.exampleVideoData,
       currentVideo: window.exampleVideoData[0],
+      value: ''
     };
     
   }
@@ -34,7 +35,9 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div> <Search search={this.onYouTubeQuerySubmit}/> </div>
+            <div> <input onChange={event => this.setState({ value: event.target.value })} /> 
+            Value of the input: {this.state.value}  
+            </div>
           </div>
         </nav>
         <div className="row">
