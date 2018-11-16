@@ -2,8 +2,27 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      videos: window.exampleVideoData,
-      currentVideo: window.exampleVideoData[0],
+      searchInput: 'cat videos',
+
+      videos: [],
+
+      currentVideo: {
+        id: {
+          videoId: ''
+        },
+        snippet: {
+          title: '',
+          description: '',
+          thumbnails: {
+            default: {
+              url: '',
+              width: 120,
+              height: 90
+            },
+          },
+        }
+      }
+
     };
     this.onVideoClick = this.onVideoClick.bind(this);
   }
@@ -11,6 +30,15 @@ class App extends React.Component {
   onVideoClick() {
     this.setState({
       currentVideo: video 
+    });
+  }
+
+  componentDidMount() {
+    this.props.searchYouTube({key: window.YOUTUBE_API_KEY, query: this.state.searchInput, max: 5}, (videos) => {
+      this.setState({ 
+        videos: videos,
+        currentVideo: videos[0]
+      });
     });
   }
 
@@ -38,3 +66,4 @@ class App extends React.Component {
 // In the ES6 spec, files are "modules" and do not share a top-level scope
 // `var` declarations will only exist globally where explicitly defined
 window.App = App;
+
