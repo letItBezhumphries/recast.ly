@@ -26,7 +26,7 @@ class App extends React.Component {
     };
     this.onVideoClick = this.onVideoClick.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
-    this.debouncedMount = _.debounce(this.componentDidMount, 500).bind(this);
+    this.debouncedMount = _.debounce(this.componentDidMount, 500, {'leading': true}).bind(this);
   }
 
   onVideoClick() {
@@ -39,7 +39,7 @@ class App extends React.Component {
     this.props.searchYouTube({key: window.YOUTUBE_API_KEY, query: this.state.searchInput, max: 5}, (videos) => {
       this.setState({ 
         videos: videos,
-        currentVideo: videos[0]
+        currentVideo: videos[0],
       });
     });
   }
@@ -55,7 +55,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div> <Search onChange={this.onSearchChange}/> </div>
+            <div> <Search onChange={this.onSearchChange} value={this.state.searchInput}/> </div>
           </div>
         </nav>
         <div className="row">
