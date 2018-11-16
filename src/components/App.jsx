@@ -25,6 +25,8 @@ class App extends React.Component {
 
     };
     this.onVideoClick = this.onVideoClick.bind(this);
+    this.onSearchChange = this.onSearchChange.bind(this);
+    this.debouncedMount = _.debounce(this.componentDidMount, 500).bind(this);
   }
 
   onVideoClick() {
@@ -42,12 +44,18 @@ class App extends React.Component {
     });
   }
 
+  onSearchChange(event) {
+    this.setState({
+      searchInput: event.target.value
+    }, this.debouncedMount);
+  }
+
   render() {
     return (
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div> <Search /> </div>
+            <div> <Search onChange={this.onSearchChange}/> </div>
           </div>
         </nav>
         <div className="row">
@@ -66,4 +74,3 @@ class App extends React.Component {
 // In the ES6 spec, files are "modules" and do not share a top-level scope
 // `var` declarations will only exist globally where explicitly defined
 window.App = App;
-
